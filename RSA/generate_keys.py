@@ -28,4 +28,21 @@ def generate_random_primenumber(size: int) -> int:
         else:
             random_odd += 2
 
-print(generate_random_primenumber(1024))
+
+def generate_key():
+    # 1 Privately choose two prime numbers p, q. These two numbers are
+    p = generate_random_primenumber(1024)
+    q = generate_random_primenumber(1024)
+
+    # 2 Calculate n = pq. n is made public
+    n = p*q
+
+    # 3 Choose e < φ(n) such that gcd(e, φ(n)) = 1. e is public
+    e = 65537 
+
+    # 4 Privately calculate d ≡ e−1mod φ(n). d is kept secret. -> φ(pq) = φ(p) ∗ φ(q) = (p − 1)(q − 1)
+    d = pow(e, -1, (p-1)*(q-1)) 
+    return (e, n), (d, n)
+
+    
+
