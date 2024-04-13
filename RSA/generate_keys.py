@@ -29,10 +29,10 @@ def generate_random_primenumber(size: int) -> int:
             random_odd += 2
 
 
-def generate_key():
+def generate_key(size: int = 1024):
     # 1 Privately choose two prime numbers p, q. These two numbers are
-    p = generate_random_primenumber(1024)
-    q = generate_random_primenumber(1024)
+    p = generate_random_primenumber(size)
+    q = generate_random_primenumber(size)
 
     # 2 Calculate n = pq. n is made public
     n = p*q
