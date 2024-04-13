@@ -27,3 +27,5 @@ def generate_random_primenumber(size: int) -> int:
             return random_odd
         else:
             random_odd += 2
+
+print(generate_random_primenumber(1024))
