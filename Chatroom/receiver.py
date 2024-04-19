@@ -1,6 +1,6 @@
 import socket, RSA
 
-class ChatroomReceiver:
+class Receiver:
     # initialize an encrypted TCP chatroom receiver
     def __init__(self, ip: str, port: int, key: tuple[int, int]) -> None:
         self.host = (ip, port)

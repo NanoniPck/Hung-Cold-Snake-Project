@@ -1,6 +1,6 @@
 import socket, RSA
 
-class ChatroomSender:
+class Sender:
     # initialize an encrypted chatroom sender
     def __init__(self, ip: str, port: int, e: int = 65537) -> None:
         self.dest = (ip, port)
