@@ -9,8 +9,9 @@ def get_args() -> tuple[str]:
 
     args = parser.parse_args()
 
-    if args.mode not in ['send', 'receive']:
-        raise Exception('Only supported "send" and "receive" modes')
+    supported_modes = ['send', 'receive', 're-key']
+    if args.mode not in supported_modes:
+        raise Exception(f'Mode "{args.mode}" not allowed; only support {supported_modes}')
     
     try: args.port = int(args.port)
     except ValueError: raise Exception('Invalid port number')
