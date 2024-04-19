@@ -14,7 +14,7 @@ class Sender:
         return self
     
     # once the receiver is exited, close connection
-    def __exit__(self):
+    def __exit__(self, e_type, e_val, traceback):
         self.conn.close()
 
     # encrypts and sends a message

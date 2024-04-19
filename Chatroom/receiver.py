@@ -13,18 +13,19 @@ class Receiver:
         sock.listen()
         self.conn, self.addr = sock.accept()
         _, modulus = self.key
-        self.conn.sendall(modulus.to_bytes(modulus.bit_length()))
+        modulus_size = modulus.bit_length() // 8 + 1
+        self.conn.sendall(modulus.to_bytes(modulus_size))
         return self
     
     # once the receiver is exited, close connection
-    def __exit__(self):
+    def __exit__(self, e_type, e_val, traceback):
         self.conn.close()
 
     # try getting some data, if so decrypts
     def get_message(self) -> str:
         try: data = self.conn.recv(1024)
         except ConnectionError: return None
-        if not data:            return None
+        if data == None:        return None
         return RSA.decrypt(data, self.key)
 
 
