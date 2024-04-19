@@ -1,9 +1,16 @@
-import RSA
+import argparse, RSA, Interface
 
-public_key, private_key = RSA.generate_key(1024)
-m = "Gappi good cat"
-encrypted = RSA.encrypt(m, public_key)
-decrypted = RSA.decrypt(encrypted, private_key)
+mode, ip, port, keysize = Interface.get_args()
 
-print(m, decrypted)
+match mode:
+    case "re-key": 
+        print("Generating keys...")
+        if keysize == None: new_keys = RSA.generate_key()
+        else: new_keys = RSA.generate_key(size=keysize)
+        RSA.set_keys(new_keys)
+        print("Done")
+    
+    case "receive": 
+        key = RSA.get_keys()
+        
 
