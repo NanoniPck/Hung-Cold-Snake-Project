@@ -25,7 +25,7 @@ class Receiver:
     def get_message(self) -> str:
         try: data = self.conn.recv(1024)
         except ConnectionError: return None
-        if data == None:        return None
+        if not data:        return None
         return RSA.decrypt(data, self.key)
 
 
