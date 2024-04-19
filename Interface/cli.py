@@ -2,7 +2,7 @@ import argparse
 
 def get_args() -> tuple[str]:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode")
+    parser.add_argument("mode", help="set mode either 'send', 'receive', 're-key'")
     parser.add_argument("--ip")
     parser.add_argument("--port")
     parser.add_argument("--keysize")
