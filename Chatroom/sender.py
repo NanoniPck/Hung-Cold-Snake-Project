@@ -16,7 +16,7 @@ class Sender:
 
     # encrypts and sends a message
     def send_message(self, message: bytes):
-        # TODO: S -> R: S, {{SSSK}PRs}PUr, {m}SSSK
+        # S -> R: S, {{SSSK}PRs}PUr, {m}SSSK
         sssk = Fernet.generate_key()
         cipher_text = Fernet(sssk).encrypt(message)
         cipher_sssk = RSA.encrypt(sssk, self.priv_key)
