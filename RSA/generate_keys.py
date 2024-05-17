@@ -29,7 +29,7 @@ def generate_random_primenumber(size: int) -> int:
             random_odd += 2
 
 
-def generate_key(size: int = 1024, e: int = 65537) -> tuple[int, int]:
+def generate_key(size: int = 1024, e: int = 65537) -> tuple[int, int, int]:
     # 1 Privately choose two prime numbers p, q. These two numbers are
     p = generate_random_primenumber(size)
     q = generate_random_primenumber(size)
@@ -42,7 +42,7 @@ def generate_key(size: int = 1024, e: int = 65537) -> tuple[int, int]:
 
     # 4 Privately calculate d ≡ e−1mod φ(n). d is kept secret. -> φ(pq) = φ(p) ∗ φ(q) = (p − 1)(q − 1)
     d = pow(e, -1, (p-1)*(q-1)) 
-    return (d, n) 
+    return (e, d, n) 
 
     
 
