@@ -15,7 +15,7 @@ match mode:
         with open('TestCases\\sending_image.jpg', 'rb') as f:
             with Chatroom.Sender(ip, port, name) as chat:
                 print(f"Sending to {chat.dest}...")
-                while data := f.read(100):
+                while data := f.read(65536):
                     chat.send_message(data)
                 chat.send_message(b'')
         print("Connection terminated")
