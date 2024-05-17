@@ -23,7 +23,7 @@ def get_args() -> tuple[str]:
 
     named_modes = ['send', 're-key']
     if args.mode in named_modes and args.name == None:
-        raise Exception(f'recipient name is required for send mode')
+        raise Exception(f'recipient name is required for send and re-key mode')
 
     
     if args.keysize != None:
