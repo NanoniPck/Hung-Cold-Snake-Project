@@ -18,7 +18,7 @@ match mode:
                 print(f"Sending to {chat.dest}...")
                 while data := f.read(512):
                     chat.send_message(data)
-                    sleep(0.05) # too fast and buffer overflow
+                    sleep(0.01) # too fast and buffer overflow
                 chat.send_message(b'')
         print("Connection terminated")
         
