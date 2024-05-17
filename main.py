@@ -12,18 +12,17 @@ match mode:
     
     case "receive": 
         key = RSA.get_keys()
-        print("Awaiting connection...")
+        print("Listening...")
         with Chatroom.Receiver(ip, port, key) as chat:
-            print(f"Connected from {chat.addr}, start chatting!")
             while message := chat.get_message():
-                print(message)
+                print(message.decode())
         print("Connection terminated")
 
     case "send": 
         with Chatroom.Sender(ip, port) as chat:
             print(f"Connected to {chat.dest}, start chatting!")
             while message := input("> "):
-                chat.send_message(message)
+                chat.send_message(message.encode())
         print("Connection terminated")
         
 
