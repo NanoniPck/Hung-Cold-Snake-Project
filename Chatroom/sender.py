@@ -10,6 +10,7 @@ class Sender:
         self.name = name
         sender_key = (d, n)
         recipient_key = RSA.get_public_key(recipient)
+        # precomputes { {SSSK}PRs }PUr
         sssk = Fernet.generate_key()
         self.fernet = Fernet(sssk)
         cipher_sssk = RSA.encrypt(sssk, sender_key)
