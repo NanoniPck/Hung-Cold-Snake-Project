@@ -29,10 +29,10 @@ def generate_random_primenumber(size: int) -> int:
             random_odd += 2
 
 
-def generate_key(size: int = 1024, e: int = 65537) -> tuple[int, int, int]:
+def generate_key(size: int, e: int = 65537) -> tuple[int, int, int]:
     # 1 Privately choose two prime numbers p, q. These two numbers are
-    p = generate_random_primenumber(size / 2)
-    q = generate_random_primenumber(size / 2)
+    p = generate_random_primenumber()
+    q = generate_random_primenumber(int(size / 2))
 
     # 2 Calculate n = pq. n is made public
     n = p*q
