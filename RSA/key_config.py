@@ -4,7 +4,7 @@ from RSA.generate_keys import generate_key
 KEYS_FOLDER = pathlib.Path(__file__).parent.parent / 'Keys'
 CONF_PATH = KEYS_FOLDER / 'private.cfg'
 
-def re_key(name: str, size: int = 1024, e: int = 65537):
+def re_key(name: str, size: int, e: int = 65537):
     e, d, n = generate_key(size)
     config = configparser.ConfigParser()
     config['DEFAULT'] = { 'name': name, 'd': f"{d:x}", 'n': f"{n:x}" }

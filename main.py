@@ -5,8 +5,8 @@ mode, ip, port, keysize, name = Interface.get_args()
 match mode:
     case "re-key": 
         print("Generating keys...")
-        if keysize == None: new_keys = RSA.re_key(name)
-        else: new_keys = RSA.re_key(name, size=keysize)
+        if keysize == None: new_keys = RSA.re_key(name, 1024)
+        else: new_keys = RSA.re_key(name, keysize)
         print("Done")
     
     case "receive": 
