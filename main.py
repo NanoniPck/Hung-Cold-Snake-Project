@@ -13,7 +13,7 @@ match mode:
         print("Listening...")
         with Chatroom.Receiver(ip, port) as chat:
             while message := chat.get_message():
-                print(message.decode())
+                print(f"{chat.sender}:", message.decode())
         print("Connection terminated")
 
     case "send": 

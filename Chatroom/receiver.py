@@ -16,10 +16,15 @@ class Receiver:
 
     # receive and decryptes message
     def get_message(self) -> bytes:
+        self.sender, _ = self.conn.recvfrom(1024)
+        self.sender = self.sender.decode()
+        sender_key = RSA.get_public_key(self.sender)
         cipher_sssk, _ = self.conn.recvfrom(1024)
         cipher_text, _ = self.conn.recvfrom(1024)
-        sssk = RSA.decrypt(cipher_sssk, self.priv_key)
-        message = Fernet(sssk).decrypt(cipher_text)
+        cipher_sssk = RSA.decrypt(cipher_sssk, self.priv_key)
+        sssk = RSA.decrypt(cipher_sssk, sender_key)
+        try: message = Fernet(sssk).decrypt(cipher_text)
+        except ValueError: raise Exception('Cannot decrypt; message compromised')
         return message
 
 
