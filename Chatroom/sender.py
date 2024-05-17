@@ -10,6 +10,10 @@ class Sender:
         self.name = name
         self.priv_key = (d, n)
         self.recipient_key = RSA.get_public_key(recipient)
+        sssk = Fernet.generate_key()
+        self.fernet = Fernet(sssk)
+        cipher_sssk = RSA.encrypt(sssk, self.priv_key)
+        self.cipher_sssk = RSA.encrypt(cipher_sssk, self.recipient_key)
 
     def __enter__(self): return self
     def __exit__(self, t, v, tb): self.conn.close()
@@ -17,14 +21,9 @@ class Sender:
     # encrypts and sends a message
     def send_message(self, message: bytes):
         # S -> R: S, {{SSSK}PRs}PUr, {m}SSSK
-        if len(message) >= 1024:
-            self.send_message(message[:len(message)//2])
-            self.send_message(message[len(message)//2:])
-        
-        sssk = Fernet.generate_key()
-        cipher_text = Fernet(sssk).encrypt(message)
-        cipher_sssk = RSA.encrypt(sssk, self.priv_key)
-        cipher_sssk = RSA.encrypt(cipher_sssk, self.recipient_key)
+        cipher_text = self.fernet.encrypt(message)
+        if len(cipher_text) >= 65536:
+            raise Exception("message too big")
         self.conn.sendto(self.name.encode(), self.dest)
-        self.conn.sendto(cipher_sssk, self.dest)
+        self.conn.sendto(self.cipher_sssk, self.dest)
         self.conn.sendto(cipher_text, self.dest)
