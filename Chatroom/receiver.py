@@ -7,9 +7,6 @@ class Receiver:
         self.host = (ip, port)
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.conn.bind(self.host)
-        name, d, n = RSA.get_private_config()
-        self.name = name
-        self.priv_key = (d, n)
         self.fernet = None
 
     def __enter__(self): return self
@@ -22,8 +19,10 @@ class Receiver:
         cipher_text, _ = self.conn.recvfrom(65536)
         self.sender = self.sender.decode()
         if self.fernet == None:
+            _, d, n = RSA.get_private_config()
+            receiver_key = (d, n)
             sender_key = RSA.get_public_key(self.sender)
-            cipher_sssk = RSA.decrypt(cipher_sssk, self.priv_key)
+            cipher_sssk = RSA.decrypt(cipher_sssk, receiver_key)
             sssk = RSA.decrypt(cipher_sssk, sender_key)
             self.fernet = Fernet(sssk)
         try: message = self.fernet.decrypt(cipher_text)

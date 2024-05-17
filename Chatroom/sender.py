@@ -8,12 +8,12 @@ class Sender:
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         name, d, n = RSA.get_private_config()
         self.name = name
-        self.priv_key = (d, n)
-        self.recipient_key = RSA.get_public_key(recipient)
+        sender_key = (d, n)
+        recipient_key = RSA.get_public_key(recipient)
         sssk = Fernet.generate_key()
         self.fernet = Fernet(sssk)
-        cipher_sssk = RSA.encrypt(sssk, self.priv_key)
-        self.cipher_sssk = RSA.encrypt(cipher_sssk, self.recipient_key)
+        cipher_sssk = RSA.encrypt(sssk, sender_key)
+        self.cipher_sssk = RSA.encrypt(cipher_sssk, recipient_key)
 
     def __enter__(self): return self
     def __exit__(self, t, v, tb): self.conn.close()
