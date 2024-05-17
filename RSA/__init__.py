@@ -1,3 +1,2 @@
 from RSA.encrypt_decrypt import encrypt, decrypt
-from RSA.generate_keys import generate_key
-from RSA.key_config import get_keys, set_keys
+from RSA.key_config import get_private_config, re_key, get_public_key

@@ -3,19 +3,22 @@ from cryptography.fernet import Fernet
 
 class Sender:
     # initialize an encrypted chatroom sender
-    def __init__(self, ip: str, port: int, e: int = 65537) -> None:
+    def __init__(self, ip: str, port: int, recipient: str) -> None:
         self.dest = (ip, port)
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sssk = Fernet.generate_key()
-        self.fernet = Fernet(self.sssk)
+        name, d, n = RSA.get_private_config()
+        self.name = name
+        self.priv_key = (d, n)
+        self.recipient_key = RSA.get_public_key(recipient)
 
     def __enter__(self): return self
-    def __exit__(self, t, v, tb): 
-        self.send_message(b'')
-        self.conn.close()
+    def __exit__(self, t, v, tb): self.conn.close()
 
     # encrypts and sends a message
     def send_message(self, message: bytes):
-        cipher_text = self.fernet.encrypt(message)
-        self.conn.sendto(self.sssk, self.dest)
+        # TODO: S -> R: S, {SSSK}PUr, {m}SSSK, {h(m)}PRs
+        sssk = Fernet.generate_key()
+        cipher_text = Fernet(sssk).encrypt(message)
+        cipher_sssk = RSA.encrypt(sssk, self.recipient_key)
+        self.conn.sendto(cipher_sssk, self.dest)
         self.conn.sendto(cipher_text, self.dest)
