@@ -21,6 +21,7 @@ match mode:
             print(f"Connected to {chat.dest}, start chatting!")
             while message := input("> "):
                 chat.send_message(message.encode())
+            chat.send_message(b'')
         print("Connection terminated")
         
 
