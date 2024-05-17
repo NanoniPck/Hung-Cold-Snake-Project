@@ -16,7 +16,7 @@ class Receiver:
     def get_message(self) -> bytes:
         self.sender, _ = self.conn.recvfrom(1024)
         cipher_sssk, _ = self.conn.recvfrom(1024)
-        cipher_text, _ = self.conn.recvfrom(65536)
+        cipher_text, _ = self.conn.recvfrom(1024)
         self.sender = self.sender.decode()
         if self.fernet == None:
             _, d, n = RSA.get_private_config()
