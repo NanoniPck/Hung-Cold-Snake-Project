@@ -21,6 +21,9 @@ def decrypt(c : bytes, key : tuple[int, int]):
 
     if len(c) > n.bit_length() // 8 + 1: 
         c1, c2 = c[:len(c)//2], c[len(c)//2:]
+        # TODO technically this is still wrong
+        # I should solve this problem using padding instead of 
+        # bytes-rounding
         m1 = decrypt(c1, key)
         m2 = decrypt(c2, key)
         return m1 + m2
