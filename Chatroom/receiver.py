@@ -2,7 +2,7 @@ import socket, RSA
 from cryptography.fernet import Fernet
 
 class Receiver:
-    # initialize an encrypted TCP chatroom receiver
+    # initialize an encrypted UDP chatroom receiver
     def __init__(self, ip: str, port: int) -> None:
         self.host = (ip, port)
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
